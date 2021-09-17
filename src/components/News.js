@@ -10,8 +10,17 @@ export default class News extends PureComponent {
     render() {
         return (
             <div>
-                This is a news components
-                <NewsItem/>
+                <div className="row">
+                    <div className="col-md-4">
+                        <NewsItem title="myTitle" description="myDesc" imgUrl="myImg"/>
+                    </div>
+                    <div className="col-md-4">
+                        <NewsItem title="myTitle" description="myDesc" imgUrl="myImg"/>
+                    </div>
+                    <div className="col-md-4">
+                        <NewsItem title="myTitle" description="myDesc" imgUrl="myImg"/>
+                    </div>
+                </div>
             </div>
         )
     }
