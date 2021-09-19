@@ -15,11 +15,12 @@ export default class News extends PureComponent {
 
     componentDidMount() {
 
-        fetch('https://newsapi.org/v2/top-headlines?country=in&apiKey=87e58df78d7a432d9bd1621b200b95a6').then(response => {
+        fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=87e58df78d7a432d9bd1621b200b95a6&pageSize=${this.props.pageSize}`).then(response => {
             return response.json()
         }).then(result => {
             this.setState({
                 articles: result.articles,
+                totalResults : result.totalResults,
                 isLoad: true,
             });
         }, (error) => {
@@ -49,11 +50,12 @@ export default class News extends PureComponent {
         }
 
         const handlePrev = () => {
-            fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=87e58df78d7a432d9bd1621b200b95a6&page=${this.state.page-1}&pageSize=20`).then(response => {
+            fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=87e58df78d7a432d9bd1621b200b95a6&page=${this.state.page-1}&pageSize=${this.props.pageSize}`).then(response => {
                 return response.json()
             }).then(result => {
                 this.setState({
                     articles: result.articles,
+                    totalResults : result.totalResults,
                     isLoad: true,
                 });
             }, (error) => {
@@ -71,11 +73,12 @@ export default class News extends PureComponent {
         }
 
         const handleNext = () => {
-            fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=87e58df78d7a432d9bd1621b200b95a6&page=${this.state.page+1}&pageSize=20`).then(response => {
+            fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=87e58df78d7a432d9bd1621b200b95a6&page=${this.state.page+1}&pageSize=${this.props.pageSize}`).then(response => {
                 return response.json()
             }).then(result => {
                 this.setState({
                     articles: result.articles,
+                    totalResults : result.totalResults,
                     isLoad: true,
                 });
             }, (error) => {
@@ -94,11 +97,9 @@ export default class News extends PureComponent {
         const results = () => {
             return (
                 <div>
-                <div className="container my-2">
-                    <h3 style={{textAlign: "center"}}>AbTak Top-headlines</h3>
-                </div>
                 <div className="container my-3 d-flex justify-content-between">
                     <p><b>No. of Articles : {this.state.articles.length}</b></p>
+                    <h2>AbTak Top-headlines</h2>
                     <p><b>Page no. : {this.state.page}</b></p>
                 </div>
                     <div className="container">
@@ -112,7 +113,7 @@ export default class News extends PureComponent {
                     </div>
                     <div className="container m-5 d-flex justify-content-between">
                         <button type="button" disabled={this.state.page <= 1} className="btn btn-dark" onClick={handlePrev}>&larr; Previous</button>
-                        <button type="button" disabled={((this.state.articles.length)/20) < this.state.page} className="btn btn-dark" onClick={handleNext}>Next &rarr;</button>
+                        <button type="button" disabled={(this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pageSize) )} className="btn btn-dark" onClick={handleNext}>Next &rarr;</button>
                     </div>
                 </div>
             )
