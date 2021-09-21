@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-
+import {Link} from 'react-router-dom'
 
 export class Navbar extends Component {
-    static propTypes = {
 
-    }
     render(props) {
         return (
             <div>
@@ -17,15 +15,33 @@ export class Navbar extends Component {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page" href="/">Home</a>
+                                    <Link className="nav-link active" aria-current="page" to="/">Home</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="/">About</a>
+                                    <Link className="nav-link active" to="/about">About</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link active"  to="/general">General</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link active" to="/entertainment">Entertainment</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link active" to="/sports">Sports</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link active" to="/health">Health</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link active" to="/business">Business</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link active" to="/technology">Technology</Link>
                                 </li>
                             </ul>
                             <form className="d-flex">
-                                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                <button className="btn btn-outline-success" type="submit">Search</button>
+                                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search"/>
+                                <button className="btn btn-outline-success" type="submit" id="BtnSearch">Search</button>
                             </form>
                         </div>
                     </div>
