@@ -40,28 +40,28 @@ export default class App extends Component {
           <Navbar mode={this.state.mode} toggleMode = {this.toggleMode}/>
           <Switch>
             <Route exact path="/">
-              <News key="general" pageSize={6} category="" country="in" />
+              <News key="general" pageSize={6} category="" country="in" mode={this.state.mode} toggleMode = {this.toggleMode}/>
             </Route>
             <Route exact path="/general">
-              <News key="general" pageSize={6} category="general" country="in" />
+              <News key="general" pageSize={6} category="general" country="in" mode={this.state.mode} toggleMode = {this.toggleMode}/>
             </Route>
             <Route exact path="/entertainment">
-              <News key="entertainment" pageSize={6} category="entertainment" country="in" />
+              <News key="entertainment" pageSize={6} category="entertainment" country="in" mode={this.state.mode} toggleMode = {this.toggleMode}/>
             </Route>
             <Route exact path="/sports">
-              <News key="sports" pageSize={6} category="sports" country="in" />
+              <News key="sports" pageSize={6} category="sports" country="in" mode={this.state.mode} toggleMode = {this.toggleMode}/>
             </Route>
             <Route exact path="/health">
-              <News key="health" pageSize={6} category="health" country="in" />
+              <News key="health" pageSize={6} category="health" country="in" mode={this.state.mode} toggleMode = {this.toggleMode}/>
             </Route>
             <Route exact path="/business">
-              <News key="business" pageSize={6} category="business" country="in" />
+              <News key="business" pageSize={6} category="business" country="in" mode={this.state.mode} toggleMode = {this.toggleMode}/>
             </Route>
             <Route exact path="/technology">
-              <News key="technology" pageSize={6} category="technology" country="in" />
+              <News key="technology" pageSize={6} category="technology" country="in" mode={this.state.mode} toggleMode = {this.toggleMode}/>
             </Route>
             <Route exact path="/science">
-              <News key="science" pageSize={6} category="science" country="in" />
+              <News key="science" pageSize={6} category="science" country="in" mode={this.state.mode} toggleMode = {this.toggleMode}/>
             </Route>
           </Switch>
         </Router>

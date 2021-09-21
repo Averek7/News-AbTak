@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 export class NewsItem extends Component {
-    render() {
+    render(props) {
+
         let { imgUrl, title, description, NewsUrl, author, PublishTime, source } =
             this.props;
+
         return (
             <div>
                 <div className="container my-3">
-                    <div className="card">
+                    <div className={`card bg-${this.props.mode}`}>
                         <span className="position-absolute top-0 start-99 translate-middle badge rounded-pill bg-danger">
                             {source}
                             <span className="visually-hidden"></span>
@@ -29,7 +31,7 @@ export class NewsItem extends Component {
                                 rel="noreferrer"
                                 href={NewsUrl}
                                 target="_blank"
-                                className={`btn btn-sm btn-${this.props.mode}`}
+                                className={`btn btn-sm btn-${this.props.mode ? "dark" : "light"}`}
                             >
                                 Know more
                             </a>

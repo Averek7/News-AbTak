@@ -24,9 +24,32 @@ export default class News extends PureComponent {
     };
   }
 
-  updateNews = () => {
+  componentDidMount() {
     fetch(
-      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=87e58df78d7a432d9bd1621b200b95a6&page=${this.state.page}&pageSize=${this.props.pageSize}`
+      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=87e58df78d7a432d9bd1621b200b95a6&pageSize=${this.props.pageSize}`
+    ).then((response) => {
+        return response.json();
+      })
+      .then(
+        (result) => {
+          this.setState({
+            articles: result.articles,
+            totalResults: result.totalResults,
+            isLoad: true,
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoad: true,
+            error,
+          });
+        }
+      );
+  }
+
+  handleNext = async() => {
+    fetch(
+      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=87e58df78d7a432d9bd1621b200b95a6&page=${this.state.page +  1}&pageSize=${this.props.pageSize}`
     )
       .then((response) => {
         return response.json();
@@ -34,6 +57,7 @@ export default class News extends PureComponent {
       .then(
         (result) => {
           this.setState({
+            page : this.state.page + 1,
             articles: result.articles,
             totalResults: result.totalResults,
             isLoad: true,
@@ -49,22 +73,30 @@ export default class News extends PureComponent {
       );
   };
 
-  componentDidMount() {
-    this.updateNews();
-  }
-
-  handlePrev = () => {
-    this.setState({
-      page: this.state.page - 1,
-    });
-    this.updateNews();
-  };
-
-  handleNext = () => {
-    this.setState({
-      page: this.state.page + 1,
-    });
-    this.updateNews();
+  handlePrev = async() => {
+    fetch(
+      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=87e58df78d7a432d9bd1621b200b95a6&page=${this.state.page -1}&pageSize=${this.props.pageSize}`
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then(
+        (result) => {
+          this.setState({
+            page : this.state.page - 1,
+            articles: result.articles,
+            totalResults: result.totalResults,
+            isLoad: true,
+          });
+          console.log(result);
+        },
+        (error) => {
+          this.setState({
+            isLoad: true,
+            error,
+          });
+        }
+      );
   };
 
   render() {
@@ -84,6 +116,8 @@ export default class News extends PureComponent {
         </div>
       );
     };
+
+
     const results = () => {
       return (
         <div>
@@ -95,9 +129,9 @@ export default class News extends PureComponent {
             <p>
               <b>Page no. : {this.state.page}</b>
             </p>
-          </div>
+          </div> 
           <div className="container">
-            <div className="row ">
+            <div className="row">
               {this.state.articles?.map((elem) => (
                 <div className="col-md-4" key={elem.url}>
                   <NewsItem
@@ -120,7 +154,7 @@ export default class News extends PureComponent {
                     author={elem.author}
                     PublishTime={elem.publishedAt}
                     source={elem.source.name}
-                  />
+                  mode = {this.props.mode}/>
                 </div>
               ))}
             </div>
@@ -129,7 +163,7 @@ export default class News extends PureComponent {
             <button
               type="button"
               disabled={this.state.page <= 1}
-              className="btn btn-light"
+              className={`btn btn-${this.props.mode ? "dark" : "light"}`}
               onClick={this.handlePrev}
             >
               &larr; Previous
@@ -140,7 +174,7 @@ export default class News extends PureComponent {
                 this.state.page + 1 >
                 Math.ceil(this.state.totalResults / this.props.pageSize)
               }
-              className="btn btn-light"
+              className={`btn btn-${this.props.mode ? "dark" : "light"}`}
               onClick={this.handleNext}
             >
               Next &rarr;
