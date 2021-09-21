@@ -1,12 +1,19 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export class Navbar extends Component {
 
+    constructor(){
+        super();
+        this.state = {
+            searchVal: null,
+        }
+    }
+    
     render(props) {
         return (
             <div>
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <nav className={`navbar navbar-expand-lg navbar-${this.props.mode} bg-${this.props.mode}`}>
                     <div className="container-fluid">
                         <a className="navbar-brand" href="/">AbTak</a>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,7 +28,7 @@ export class Navbar extends Component {
                                     <Link className="nav-link active" to="/about">About</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link active"  to="/general">General</Link>
+                                    <Link className="nav-link active" to="/general">General</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link active" to="/entertainment">Entertainment</Link>
@@ -38,13 +45,21 @@ export class Navbar extends Component {
                                 <li className="nav-item">
                                     <Link className="nav-link active" to="/technology">Technology</Link>
                                 </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link active " to="/science">Science</Link>
+                                </li>
                             </ul>
                             <form className="d-flex">
-                                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search"/>
-                                <button className="btn btn-outline-success" type="submit" id="BtnSearch">Search</button>
+                                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchBar" />
+                                <button className="btn btn-outline-success" type="submit" id="BtnSearch" onClick={this.BtnSearch}>Search</button>
                             </form>
+                            <div className="form-check form-switch mx-2">
+                                <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onClick={this.props.toggleMode}/>
+                                <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{this.props.mode}</label>
+                            </div>
                         </div>
                     </div>
+
                 </nav>
             </div>
         )

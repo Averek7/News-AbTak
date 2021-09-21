@@ -7,7 +7,7 @@ export class NewsItem extends Component {
             <div>
                 <div className="container my-3">
                     <div className="card">
-                        <span className="position-absolute top-0 start-95 translate-middle badge rounded-pill bg-danger">
+                        <span className="position-absolute top-0 start-99 translate-middle badge rounded-pill bg-danger">
                             {source}
                             <span className="visually-hidden"></span>
                         </span>
@@ -29,7 +29,7 @@ export class NewsItem extends Component {
                                 rel="noreferrer"
                                 href={NewsUrl}
                                 target="_blank"
-                                className="btn btn-sm btn-dark"
+                                className={`btn btn-sm btn-${this.props.mode}`}
                             >
                                 Know more
                             </a>

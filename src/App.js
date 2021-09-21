@@ -7,13 +7,37 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-
 export default class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      mode : "light", 
+    }
+  }
+
+  toggleMode = () => {
+    if(this.state.mode === "light"){
+      this.setState({
+        mode : "dark",
+      });
+      document.body.style.backgroundColor = "rgb(56, 56, 56)";
+      document.body.style.color = "azure";
+    }
+    else{
+      this.setState({
+        mode : "light",
+      });
+      document.body.style.backgroundColor = "white";
+      document.body.style.color = "black";
+    }
+  }
+
   render() {
     return (
       <div>
         <Router>
-          <Navbar />
+          <Navbar mode={this.state.mode} toggleMode = {this.toggleMode}/>
           <Switch>
             <Route exact path="/">
               <News key="general" pageSize={6} category="" country="in" />
@@ -35,6 +59,9 @@ export default class App extends Component {
             </Route>
             <Route exact path="/technology">
               <News key="technology" pageSize={6} category="technology" country="in" />
+            </Route>
+            <Route exact path="/science">
+              <News key="science" pageSize={6} category="science" country="in" />
             </Route>
           </Switch>
         </Router>
