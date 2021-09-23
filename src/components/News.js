@@ -26,7 +26,7 @@ export default class News extends PureComponent {
     document.title = `${
       this.props.category === ""
         ? "AbTak - Khabar Aap tak Sab Se Tez"
-        : this.capitalize(this.props.category)
+        : this.capitalize(this.props.category) + " - AbTak"
     }`;
   }
   
