@@ -101,8 +101,8 @@ export default class News extends PureComponent {
     };
     const isLoading = () => {
       return (
-        <div>
-          <div className="container my-5 text-center">
+        <div style={{marginTop: "90px"}}>
+          <div className="container my-5 text-center"> 
             <p>Please wait loading......</p>
             <div className="spinner-border text-primary" role="status">
               <span className="visually-hidden">Loading...</span>
@@ -115,8 +115,8 @@ export default class News extends PureComponent {
     const results = () => {
       return (
         <div>
-          <div className="container my-3 text-center">
-            <h2>AbTak {this.capitalize(this.props.category)} Top-headlines</h2>
+          <div className="container my-5 text-center" >
+            <h2 className="text-center" style={{margin : "80px 35px 0px"}}>AbTak {this.capitalize(this.props.category)} Top-headlines</h2>
           </div>
           <InfiniteScroll
             dataLength={this.state.articles?.length}
