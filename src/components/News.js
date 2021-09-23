@@ -23,15 +23,55 @@ export default class News extends PureComponent {
       page: 1,
       totalResults: 0,
     };
-    document.title = `${this.capitalize(this.props.category)} - AbTak`;
+    document.title = `${
+      this.props.category === ""
+        ? "AbTak - Khabar Aap tak Sab Se Tez"
+        : this.capitalize(this.props.category)
+    }`;
   }
-  capitalize(word){
+  
+  capitalize(word) {
     let lower = word.toLowerCase();
     return lower.charAt(0).toUpperCase() + word.slice(1, lower.length);
   }
+
   componentDidMount() {
+    this.props.setProgress(10);
     fetch(
-      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=87e58df78d7a432d9bd1621b200b95a6&pageSize=${this.props.pageSize}`
+      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.api}&pageSize=${this.props.pageSize}`
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then(
+        (result) => {
+          // this.props.setProgress(50);
+          this.setState({
+            articles: result.articles,
+            totalResults: result.totalResults,
+            isLoad: true,
+          });
+          console.log(result);
+        },
+        (error) => {
+          this.setState({
+            isLoad: true,
+            error,
+          });
+        }
+      );
+    this.props.setProgress(100);
+  }
+
+  fetchMoreData = async () => {
+    fetch(
+      `https://newsapi.org/v2/top-headlines?country=${
+        this.props.country
+      }&category=${
+        this.props.category
+      }&apiKey=${this.props.api}&page=${
+        this.state.page + 1
+      }&pageSize=${this.props.pageSize}`
     )
       .then((response) => {
         return response.json();
@@ -39,7 +79,8 @@ export default class News extends PureComponent {
       .then(
         (result) => {
           this.setState({
-            articles: result.articles,
+            page: this.state.page + 1,
+            articles: this.state.articles.concat(result.articles),
             totalResults: result.totalResults,
             isLoad: true,
           });
@@ -51,27 +92,6 @@ export default class News extends PureComponent {
           });
         }
       );
-  }
-
-  fetchMoreData = async() => {
-    fetch(
-      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=87e58df78d7a432d9bd1621b200b95a6&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
-    ).then((response) => {
-        return response.json();
-    }).then(
-        (result) => {
-          this.setState({
-            page: this.state.page + 1,
-            articles: this.state.articles.concat(result.articles),
-            totalResults: result.totalResults,
-            isLoad: true,
-          });
-    },(error) => {
-      this.setState({
-      isLoad: true,
-      error,
-      });
-    });
   };
 
   render() {
@@ -101,6 +121,7 @@ export default class News extends PureComponent {
           <InfiniteScroll
             dataLength={this.state.articles?.length}
             next={this.fetchMoreData}
+            // height={5}
             hasMore={this.state.articles?.length !== this.state.totalResults}
             loader={isLoading()}
             scrollableTarget="scrollableDiv"
@@ -144,7 +165,6 @@ export default class News extends PureComponent {
     return !isLoad ? isLoading() : results();
   }
 }
-
 
 // handleNext = async () => {
 //   fetch(

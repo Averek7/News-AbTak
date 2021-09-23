@@ -7,12 +7,14 @@ export class NewsItem extends Component {
 
         return (
             <div>
-                <div className="container my-3">
+                <div className="my-3">
                     <div className={`card bg-${this.props.mode}`}>
-                        <span className="position-absolute top-0 start-99 translate-middle badge rounded-pill bg-danger">
+                        <div style = {{ display: "flex", justifyContent: "flex-end", position: "absolute", right: "0px"}}>
+                        <span className="badge rounded-pill bg-danger" >
                             {source}
                             <span className="visually-hidden"></span>
                         </span>
+                        </div>
                         <img
                             src={!imgUrl ? `Image Not Found !` : imgUrl}
                             className="card-img-top"
