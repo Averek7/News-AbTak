@@ -56,7 +56,7 @@ export default class App extends Component {
               <News
                 setProgress={this.setProgress}
                 api={this.api}
-                key="general"
+                key=""
                 pageSize={6}
                 category=""
                 country="in"
